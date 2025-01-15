@@ -11,7 +11,7 @@ import userRouter from './components/user/user.route';
 import errorMiddleware from './middleware/errorMiddleware';
 import isAuthenticated from './middleware/isAuthenticated';
 import logger from './middleware/logger';
-import notFound from './middleware/notfound';
+import notFound from './middleware/notFound';
 
 const app: Express = express();
 
