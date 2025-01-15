@@ -1,6 +1,4 @@
 export default {
-  expire: '1d',
-  secret: crypto.randomUUID(),
   saltRound: 10,
 };
 export const STATUS_CODES = {

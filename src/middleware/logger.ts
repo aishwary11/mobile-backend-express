@@ -6,19 +6,7 @@ const logger = asyncHandler(async (req: Request, res: Response, next: NextFuncti
   res.on('finish', () => {
     const latency = Date.now() - start;
     console.log(
-      'Method:',
-      req.method,
-      'Url:',
-      req.url,
-      'params:',
-      JSON.stringify(req.params),
-      'body:',
-      JSON.stringify(req.body),
-      'Time:',
-      new Intl.DateTimeFormat().format(new Date()),
-      'Latency:',
-      latency,
-      'ms',
+      `Time: ${new Date().toLocaleString()}, Method: ${req.method}, Url: ${req.url}, params: ${JSON.stringify(req.params)}, body: ${JSON.stringify(req.body)}, Latency: ${latency} ms`
     );
   });
   next();
