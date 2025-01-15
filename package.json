@@ -4,7 +4,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx tsx watch src/server.ts",
-    "prettier": "prettier --write ."
+    "inspect": "npx tsx --inspect src/server.ts",
+    "prettier": "prettier --write .",
+    "prebuild": "npm run prettier",
+    "build": "rm -rf dist && npx tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",

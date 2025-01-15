@@ -5,9 +5,7 @@ const logger = asyncHandler(async (req: Request, res: Response, next: NextFuncti
   const start = Date.now();
   res.on('finish', () => {
     const latency = Date.now() - start;
-    console.log(
-      `Time: ${new Date().toLocaleString()}, Method: ${req.method}, Url: ${req.url}, params: ${JSON.stringify(req.params)}, body: ${JSON.stringify(req.body)}, Latency: ${latency} ms`
-    );
+    console.log(`Time: ${new Date().toLocaleString()}, Method: ${req.method}, Url: ${req.url}, params: ${JSON.stringify(req.params)}, body: ${JSON.stringify(req.body)}, Latency: ${latency} ms`);
   });
   next();
 });
