@@ -1,19 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
-import Joi from 'joi';
+import { Schema, z } from 'zod';
 import { STATUS_CODES } from '../constant';
+import asyncHandler from './asynchandler';
 import responseHandler from './responsehelpers';
 
-const formSchema = Joi.object({
-  name: Joi.string().min(3).max(50).required(),
-  email: Joi.string().email().required(),
-  age: Joi.number().min(18).max(75).required(),
-});
-
-export const validateForm = async (req: Request, res: Response, next: NextFunction) => {
-  const { error } = formSchema.validate(req.body);
-  if (error) {
-    const errorMessage = error.details.map(detail => detail.message).join(', ');
-    return responseHandler(res, STATUS_CODES.BAD_REQUEST, errorMessage);
+export const validateFormZod = (formValidate: Schema) => asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await formValidate.parseAsync(req.body);
+    next();
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const errorMessage = error.errors.map((err) => err.message).join(', ');
+      return responseHandler(res, STATUS_CODES.BAD_REQUEST, errorMessage);
+    }
+    next(error);
   }
-  next();
-};
+});
