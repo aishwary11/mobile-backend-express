@@ -15,7 +15,9 @@ const logger = asyncHandler(async (req: Request, res: Response, next: NextFuncti
       second: '2-digit',
       hour12: true,
     }).format(new Date());
-    console.log(`Time: ${pc.green(formattedTime)}, Method: ${pc.yellow(req.method)}, originalUrl: ${pc.blue(req.originalUrl)}, params: ${pc.cyan(JSON.stringify(req.params))}, body: ${pc.cyan(JSON.stringify(req.body))}, Latency: ${pc.red(latency)} ms`);
+    console.log(
+      `Time: ${pc.green(formattedTime)}, Method: ${pc.yellow(req.method)}, originalUrl: ${pc.blue(req.originalUrl)}, params: ${pc.cyan(JSON.stringify(req.params))}, body: ${pc.cyan(JSON.stringify(req.body))}, Latency: ${pc.red(latency)} ms`,
+    );
   });
   next();
 });
