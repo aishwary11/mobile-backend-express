@@ -2,7 +2,7 @@ import type { Response } from 'express';
 import type { ResponseData } from '../../types';
 import { STATUS_CODES } from '../constant';
 
-const responseHelper = (res: Response, statusCode: number = STATUS_CODES.OK, msg: string | null = null, data?: any): Response => {
+const responseHelper = (res: Response, statusCode: number = STATUS_CODES.OK, msg: string = '', data?: any): Response => {
   const responseData: ResponseData = {
     msg,
     data,
