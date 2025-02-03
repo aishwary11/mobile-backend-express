@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import type { Schema } from 'zod';
 import { ZodError } from 'zod';
 import { STATUS_CODES } from '../constant';
