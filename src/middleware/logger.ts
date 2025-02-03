@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
+import pc from 'picocolors';
 import asyncHandler from '../common/utils/asynchandler';
 
 const logger = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +15,7 @@ const logger = asyncHandler(async (req: Request, res: Response, next: NextFuncti
       second: '2-digit',
       hour12: true,
     }).format(new Date());
-    console.log(`Time: ${formattedTime}, Method: ${req.method}, originalUrl: ${req.originalUrl}, params: ${JSON.stringify(req.params)}, body: ${JSON.stringify(req.body)}, Latency: ${latency} ms`);
+    console.log(`Time: ${pc.green(formattedTime)}, Method: ${pc.yellow(req.method)}, originalUrl: ${pc.blue(req.originalUrl)}, params: ${pc.cyan(JSON.stringify(req.params))}, body: ${pc.cyan(JSON.stringify(req.body))}, Latency: ${pc.red(latency)} ms`);
   });
   next();
 });

@@ -15,7 +15,7 @@ const isAuthenticated = asyncHandler(async (req: AuthenticatedRequest, res: Resp
     return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Access Denied!');
   }
   try {
-    req.user = await verifyToken(token);
+    req.user = verifyToken(token);
     next();
   } catch (error) {
     console.error('Token verification failed:', error);

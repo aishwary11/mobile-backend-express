@@ -17,7 +17,7 @@ const login = asyncHandler(async (req: Request, res: Response) => {
     return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Invalid credentials');
   }
   const { password: userPassword, ...userDetaills } = user.toObject();
-  const token = await generateToken(userDetaills);
+  const token = generateToken(userDetaills);
   return responseHelper(res, STATUS_CODES.OK, 'Login successful', { token });
 });
 
