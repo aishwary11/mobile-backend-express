@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { STATUS_CODES } from '../../common/constant';
 import asyncHandler from '../../common/utils/asynchandler';
 import responseHelper from '../../common/utils/responsehelpers';
