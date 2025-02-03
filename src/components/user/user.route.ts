@@ -5,5 +5,5 @@ import userController from './user.controller';
 import { loginSchemaZod } from './user.validator';
 const userRouter: Router = router();
 userRouter.post('/login', validateFormZod(loginSchemaZod), userController.login);
-userRouter.post('/register', userController.register);
+userRouter.post('/register', validateFormZod(loginSchemaZod), userController.register);
 export default userRouter;

@@ -19,11 +19,7 @@
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
     "noImplicitThis": true,
-    "useUnknownInCatchVariables": true,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "useUnknownInCatchVariables": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]

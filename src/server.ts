@@ -13,7 +13,7 @@ import notFound from './middleware/notFound';
 
 const app: Express = express();
 
-const port = process.env.PORT || 5000;
+const port: number = parseInt(process.env.PORT!) || 5000;
 
 connectDB();
 
