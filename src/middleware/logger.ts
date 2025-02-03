@@ -1,5 +1,5 @@
-import asyncHandler from '@/common/utils/asynchandler';
 import type { NextFunction, Request, Response } from 'express';
+import asyncHandler from '../common/utils/asynchandler';
 
 const logger = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   const start = Date.now();
