@@ -35,11 +35,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileUpload());
 app.use(compression());
 app.use('/user', userRouter);
-// app.use(isAuthenticated); 
+// app.use(isAuthenticated);
 app.use('/gallery', galleryRouter);
 app.use('*', notFound);
 app.use(errorMiddleware);
 
-app.listen(port, () =>
-  console.log(`Server is running on port ${pc.yellow(port)}`)
-);
+app.listen(port, () => console.log(`Server is running on port ${pc.yellow(port)}`));

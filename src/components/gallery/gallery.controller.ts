@@ -7,10 +7,9 @@ import responseHelper from '../../common/utils/responsehelpers';
 import GalleryModel from './gallery.model';
 
 export const getGallery = asyncHandler(async (req: Request, res: Response) => {
-  const galleryRecords = await GalleryModel.find({ userEmail: req.body.email }, { "images.filePath": 1 }).lean();
+  const galleryRecords = await GalleryModel.find({ userEmail: req.body.email }, { 'images.filePath': 1 }).lean();
   return responseHelper(res, STATUS_CODES.OK, 'Gallery records fetched successfully', galleryRecords);
 });
-
 
 export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
   try {
@@ -23,7 +22,7 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
     const uploadFolderPath = path.resolve(__dirname, '../../../uploads/');
     await fs.mkdir(uploadFolderPath, { recursive: true });
     const savedImages = await Promise.all(
-      filesArray.map(async (file) => {
+      filesArray.map(async file => {
         const fileData = file.data;
         if (!fileData) {
           throw new Error(`File data is missing for file: ${file.name}`);
@@ -33,9 +32,9 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
         await fs.writeFile(filePath, fileData);
         return {
           name: uniqueFileName,
-          filePath
+          filePath,
         };
-      })
+      }),
     );
     const galleryRecord = await GalleryModel.create({
       userEmail: email,
@@ -44,6 +43,5 @@ export const uploadImage = asyncHandler(async (req: Request, res: Response) => {
     return responseHelper(res, STATUS_CODES.OK, 'Files uploaded successfully', {
       galleryRecord,
     });
-  } catch (error) {
-  }
+  } catch (error) {}
 });
