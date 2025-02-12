@@ -1,24 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import winston from 'winston';
+import winston, { Logger } from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 
 const { createLogger, format, transports } = winston;
 
-const getFormattedDate = (): string =>
-  new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
-
-const ensureLogsDirectory = (logsDir: string): void => {
-  try {
-    fs.mkdirSync(logsDir, { recursive: true });
-  } catch (error) {
-    console.error(`Failed to create logs directory: ${logsDir}`, error);
-    throw error;
-  }
-};
-
-const getFormattedTimestamp = (): string => {
-  const now = new Date();
+function getFormattedDateTime(): string {
   const options: Intl.DateTimeFormatOptions = {
     day: '2-digit',
     month: '2-digit',
@@ -28,21 +15,31 @@ const getFormattedTimestamp = (): string => {
     second: '2-digit',
     hour12: true,
   };
-  return now.toLocaleString('en-IN', options).replace(',', '');
-};
+  const formatter = new Intl.DateTimeFormat('en-GB', options);
+  return formatter.format(new Date());
+}
 
-const createLoggerInstance = () => {
-  const currentDate = getFormattedDate();
+function ensureLogsDirectory(logsDir: string): void {
+  try {
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir, { recursive: true });
+    }
+  } catch (error) {
+    console.error(`Failed to create logs directory: ${logsDir}`, error);
+    throw error;
+  }
+}
+
+function createLoggerInstance(): Logger {
+  const currentDate = getFormattedDateTime().split(',')[0];
   const logsDir = path.join(__dirname, '../../../logs', currentDate);
   ensureLogsDirectory(logsDir);
-
   const logFormat = format.combine(
-    format.timestamp({ format: getFormattedTimestamp }),
-    format.printf(({ timestamp, level, message }) =>
-      `[${timestamp}] ${level.toUpperCase()}: ${message}`
-    )
+    format.timestamp({ format: () => getFormattedDateTime() }),
+    format.printf(({ timestamp, level, message }) => {
+      return `[${timestamp}] ${level.toUpperCase()}: ${message}`;
+    }),
   );
-
   return createLogger({
     level: 'info',
     format: logFormat,
@@ -54,9 +51,11 @@ const createLoggerInstance = () => {
         zippedArchive: true,
         maxSize: '10m',
         maxFiles: '14d',
+        createSymlink: false,
       }),
     ],
   });
-};
+}
 
-export default createLoggerInstance();
+const loggers = createLoggerInstance();
+export default loggers;
