@@ -16,8 +16,8 @@ const login = asyncHandler(async (req: Request, res: Response) => {
   if (!isPasswordMatch) {
     return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Invalid credentials');
   }
-  const { password: userPassword, ...userDetaills } = user.toObject();
-  const token = generateToken(userDetaills);
+  const { password: userPassword, ...userDetails } = user.toObject();
+  const token = generateToken(userDetails);
   return responseHelper(res, STATUS_CODES.OK, 'Login successful', { token });
 });
 
