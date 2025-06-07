@@ -22,9 +22,9 @@ export default function logger(req: Request, res: Response, next: NextFunction) 
         `URL: ${pc.blue(req.originalUrl)}`,
         `Params: ${pc.cyan(JSON.stringify(req.params))}`,
         `Body: ${pc.cyan(JSON.stringify(req.body))}`,
-        `Latency: ${pc.red(latency.toFixed(2))} ms`
-      ].join(', ')
+        `Latency: ${pc.red(latency.toFixed(2))} ms`,
+      ].join(', '),
     );
   });
   next();
-};
+}
