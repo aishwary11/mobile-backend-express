@@ -7,17 +7,14 @@ import type { AuthenticatedRequest } from '../types';
 
 const isAuthenticated = asyncHandler(async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Access Denied!');
-  }
+  if (!authHeader) return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Access Denied!');
   const token = authHeader.split(' ')[1];
-  if (!token) {
-    return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Access Denied!');
-  }
+  if (!token) return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Access Denied!');
   try {
     req.user = verifyToken(token);
     next();
   } catch (error) {
+    if (error instanceof Error) return responseHelper(res, STATUS_CODES.UNAUTHORIZED, error.message);
     console.error('Token verification failed:', error);
     return responseHelper(res, STATUS_CODES.UNAUTHORIZED, 'Access Denied!');
   }
