@@ -28,7 +28,7 @@ app.use(cors());
 app.use(
   rateLimit({
     windowMs: 60 * 1000,
-    limit: 25,
+    limit: 10,
     message: 'Too many requests from this IP, please try again after a minute.',
     statusCode: STATUS_CODES.TOO_MANY_REQUESTS,
   }),
