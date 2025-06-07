@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "nodenext",
     "rootDir": "./src",
     "outDir": "./dist",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
