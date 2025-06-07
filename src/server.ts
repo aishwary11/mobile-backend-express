@@ -49,11 +49,22 @@ app.use(errorMiddleware);
 //     cluster.fork();
 //   }
 // } else {
-app.listen(port, error => {
-  if (error) {
-    console.error('Error starting server:', error);
-    process.exit(1);
-  }
+app.listen(port, () => {
   console.log(`Server is running on port ${pc.yellow(port)} 🚀`);
 });
 // }
+function shutDown() {
+  console.log('Shutting down server...');
+  process.exit(0);
+}
+
+process.on('SIGINT', shutDown);
+process.on('SIGTERM', shutDown);
+process.on('uncaughtException', (err: Error) => {
+  console.error('Uncaught Exception:', err.message);
+  shutDown();
+});
+process.on('unhandledRejection', (reason: any, promise: Promise<any>) => {
+  console.error('Unhandled Rejection:', reason, 'at', promise);
+  shutDown();
+});
